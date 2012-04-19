@@ -1,0 +1,137 @@
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <deque>
+#include <queue>
+#include <stack>
+#include <bitset>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <cstdio>
+#include <cmath>
+#include <cstdlib>
+#include <cctype>
+#include <string>
+#include <cstring>
+#include <cstdio>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <cstring>
+#include <climits>
+
+#define FOR(i, a, b) for(i = a; i < b; i++)
+#define pb(a, b) a.push_back(b)
+
+using namespace std;
+
+class Shuffling {
+	public:
+	int position(int cards, vector <int> shuffles);
+	
+// BEGIN CUT HERE
+	public:
+	void run_test(int Case) { if ((Case == -1) || (Case == 0)) test_case_0(); if ((Case == -1) || (Case == 1)) test_case_1(); if ((Case == -1) || (Case == 2)) test_case_2(); if ((Case == -1) || (Case == 3)) test_case_3(); if ((Case == -1) || (Case == 4)) test_case_4(); if ((Case == -1) || (Case == 5)) test_case_5();}
+	private:
+	template <typename T> string print_array(const vector<T> &V) { ostringstream os; os << "{ "; for (typename vector<T>::const_iterator iter = V.begin(); iter != V.end(); ++iter) os << '\"' << *iter << "\","; os << " }"; return os.str(); }
+	void verify_case(int Case, const int &Expected, const int &Received) { cerr << "Test Case #" << Case << "..."; if (Expected == Received) cerr << "PASSED" << endl; else { cerr << "FAILED" << endl; cerr << "\tExpected: \"" << Expected << '\"' << endl; cerr << "\tReceived: \"" << Received << '\"' << endl; } }
+	void test_case_0() { int Arg0 = 10; int Arr1[] = { -2 }; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); int Arg2 = 2; verify_case(0, Arg2, position(Arg0, Arg1)); }
+	void test_case_1() { int Arg0 = 52; int Arr1[] = { 1, 17, 12, 26, 9 }; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); int Arg2 = 0; verify_case(1, Arg2, position(Arg0, Arg1)); }
+	void test_case_2() { int Arg0 = 10; int Arr1[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1 }; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); int Arg2 = 5; verify_case(2, Arg2, position(Arg0, Arg1)); }
+	void test_case_3() { int Arg0 = 100; int Arr1[] = { -50 }; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); int Arg2 = 50; verify_case(3, Arg2, position(Arg0, Arg1)); }
+	void test_case_4() { int Arg0 = 100; int Arr1[] = { -48, -49, -2, 10}; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); int Arg2 = 95; verify_case(4, Arg2, position(Arg0, Arg1));} 
+    void test_case_5() { int Arg0 = 8; int Arr1[] = { -1, -2, 2}; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); int Arg2 = 4; verify_case(5, Arg2, position(Arg0, Arg1));}
+
+// END CUT HERE
+ 
+};
+
+int Shuffling::position (int cards, vector<int> shuffles) {
+    int index = 0;
+    int nindex = 0;
+    int i;
+    int x;
+
+    FOR(i, 0, shuffles.size())
+    {
+        if (shuffles[i] > 0)
+        {
+            if (index >= cards/2)
+            {
+                // top
+                x = cards - index - 1;
+
+                if (x <= shuffles[i])
+                {
+                    nindex = index + 1;
+                }
+                else
+                {
+                    x = cards - index;
+                    nindex = 2*x - shuffles[i];
+                    nindex = cards - nindex;
+
+                }
+            }
+            else
+            {
+                if (index < shuffles[i])
+                {
+                    nindex = index;
+                }
+                else
+                {
+                    nindex = 2*index - shuffles[i] + 1;
+                }
+            }
+
+        }
+        else
+        {
+            shuffles[i] = abs(shuffles[i]);
+            if (index >= cards/2)
+            {
+                // top deck
+                index = index - cards/2;
+                if (index <= shuffles[i])
+                {
+                    nindex = index;
+                }
+                else
+                {
+                    nindex = 2*index - shuffles[i];
+                }
+            }
+            else
+            {
+                // bottom
+                x = cards/2 - index - 1;
+                if (x <= shuffles[i])
+                {
+                    nindex = cards - x - 1;
+                }
+                else
+                {
+                    nindex = 2*index + shuffles[i];
+                }
+            }
+        }
+        printf ("%d:%d\n", i, nindex);
+        index = nindex;
+    }
+    return nindex;
+}
+
+// BEGIN CUT HERE
+int main()
+{
+     Shuffling ___test; 
+      ___test.run_test(-1); 
+} 
+// END CUT HERE

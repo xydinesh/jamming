@@ -1,0 +1,19 @@
+#!/usr/bin/python
+import sys
+
+(n,m) = map(int, sys.stdin.next().strip().split (" "))
+prof = [0]*(n + 1)
+box = [0]*m
+
+for ii in xrange(m):
+    box[ii] = map(int, sys.stdin.next().strip().split (" "))
+
+for ii in xrange(1, n + 1):
+    for jj in xrange(m):
+        if (box[jj][0] <= ii):
+            if (prof[ii - box[jj][0]] + ] < prof[ii]):
+                prof[ii] = prof[ii - box[jj][0]] + prof[box[jj][0]]
+
+print prof
+        
+    

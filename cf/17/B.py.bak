@@ -1,0 +1,38 @@
+#!/usr/bin/python
+import sys
+n = int(sys.stdin.next().strip())
+qual = map(int, sys.stdin.next().strip().split (" "))
+m = int(sys.stdin.next().strip())
+apps = []
+cost = [-1]*n
+for i in xrange(m):
+    app = map(int, sys.stdin.next().strip().split (" "))
+    apps.append(app[:])
+
+maxi = max(qual)
+mi = 0
+for i in xrange(len(qual)):
+    if qual[i] == maxi:
+        mi = i;
+        break
+
+cost[mi] = 0
+for i in xrange(n):
+    for j in xrange(m):
+        if (i == (apps[j][1] - 1)):
+            if (cost[i] > -1):
+                if (cost[i] > apps[j][2]):
+                    cost[i] = apps[j][2]
+            else:
+                cost[i] = apps[j][2]
+            
+
+f = [x for x in cost if x < 0]
+if (len(f) > 0):
+    print -1
+else:
+    print sum(cost)
+
+    
+    
+

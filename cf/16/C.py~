@@ -1,0 +1,12 @@
+#!/usr/bin/python
+import sys
+import math
+
+(a,b,x,y) = map(int, sys.stdin.next().strip().split (" "))
+
+p = math.gcd(x, y);
+x /= p
+y /= p
+
+print x, y
+print p*x, p*y
